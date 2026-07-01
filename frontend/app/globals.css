@@ -1,6 +1,6 @@
 :root {
-  --biru: #1e40af;
-  --biru-tua: #1e3a8a;
+  --biru: #004788;
+  --biru-tua: #00335f;
   --abu-bg: #f1f5f9;
   --abu-garis: #e2e8f0;
   --abu-teks: #64748b;
@@ -323,10 +323,11 @@ textarea {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 34px;
-  height: 34px;
-  background: rgba(255, 255, 255, 0.15);
-  border-radius: 9px;
+  width: 40px;
+  height: 40px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.18);
 }
 .portal-logo__text {
   font-size: 20px;

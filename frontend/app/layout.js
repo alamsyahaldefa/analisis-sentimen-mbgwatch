@@ -5,6 +5,8 @@ export const metadata = {
   description:
     "Dashboard analisis sentimen berita Program Makan Bergizi Gratis (MBG) " +
     "menggunakan model IndoBERT.",
+  // Favicon memakai file yang sama dengan logo: frontend/public/logo.png
+  icons: { icon: "/logo.png" },
 };
 
 export default function RootLayout({ children }) {
