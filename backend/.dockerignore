@@ -1,0 +1,6 @@
+venv/
+__pycache__/
+*.pyc
+mbg.db
+.git/
+.env

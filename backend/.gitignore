@@ -1,0 +1,13 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+
+# DB SQLite lokal (dibuat otomatis saat runtime)
+mbg.db
+
+# Env
+.env
+
+# CATATAN: model_mbg_indobert/ dan mbg_berlabel.csv SENGAJA TIDAK diabaikan
+# agar ikut ter-commit ke Hugging Face Space (bobot lewat git-lfs).

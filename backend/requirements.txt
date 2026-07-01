@@ -1,0 +1,10 @@
+fastapi
+uvicorn[standard]
+transformers
+torch
+pandas
+requests
+beautifulsoup4
+lxml
+python-dateutil
+trafilatura

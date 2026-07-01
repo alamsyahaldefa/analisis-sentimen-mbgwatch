@@ -1,0 +1,22 @@
+# Frontend
+frontend/node_modules/
+frontend/.next/
+frontend/.env.local
+frontend/.vercel/
+
+# Backend
+backend/venv/
+backend/__pycache__/
+backend/*.pyc
+backend/mbg.db
+backend/.env
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Clone Hugging Face Space (repo git terpisah — jangan ikut ke GitHub)
+mbg-watch-api/
+
+# Setelan lokal Claude Code
+.claude/
