@@ -202,6 +202,95 @@ tbody tr:nth-child(even) {
   color: #1e40af;
 }
 
+/* ---------- Aksi admin di tabel (CRUD sentimen) ---------- */
+.td-aksi {
+  text-align: right;
+  white-space: nowrap;
+}
+.btn-aksi {
+  border: 1px solid var(--abu-garis);
+  background: #fff;
+  color: var(--abu-teks);
+  border-radius: 7px;
+  padding: 4px 9px;
+  font-size: 13px;
+  cursor: pointer;
+  margin-left: 6px;
+  line-height: 1.4;
+}
+.btn-aksi:hover {
+  border-color: var(--biru);
+  color: var(--biru);
+}
+.btn-aksi:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.btn-aksi--hapus:hover {
+  border-color: var(--negatif);
+  color: var(--negatif);
+}
+.btn-aksi--simpan {
+  background: var(--biru);
+  border-color: var(--biru);
+  color: #fff;
+}
+.btn-aksi--simpan:hover {
+  background: var(--biru-tua);
+  color: #fff;
+}
+.select-sentimen {
+  padding: 4px 8px;
+  border: 1px solid var(--abu-garis);
+  border-radius: 7px;
+  font-size: 13px;
+  background: #fff;
+}
+.tag-upload {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 1px 7px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--biru);
+  background: #e8f0fa;
+  border: 1px solid #cdd9ec;
+  vertical-align: middle;
+}
+
+/* ---------- Panel upload artikel ---------- */
+.upload-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.upload-file {
+  flex: 1 1 300px;
+  min-width: 0;
+  padding: 8px 10px;
+  border: 1px dashed var(--abu-garis);
+  border-radius: 8px;
+  font-size: 13px;
+  background: #f8fafc;
+}
+.upload-daftar {
+  margin: 8px 0 0;
+  padding-left: 18px;
+  font-size: 13px;
+  line-height: 1.9;
+}
+.btn-link {
+  border: none;
+  background: none;
+  color: var(--biru);
+  font-size: 13px;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+}
+
 /* ---------- Paginasi ---------- */
 .pagination {
   display: flex;

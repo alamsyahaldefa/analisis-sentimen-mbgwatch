@@ -6,6 +6,7 @@ import { useCallback, useEffect, useState } from "react";
 import ArticleTable from "../../components/ArticleTable";
 import FilterBar from "../../components/FilterBar";
 import PredictPanel from "../../components/PredictPanel";
+import UploadPanel from "../../components/UploadPanel";
 import UrlPredictPanel from "../../components/UrlPredictPanel";
 import SentimentDonut from "../../components/SentimentDonut";
 import StatCards from "../../components/StatCards";
@@ -77,6 +78,19 @@ export default function Dashboard() {
     muatArtikel(halaman, filter);
   }
 
+  // Segarkan statistik + tabel (dipakai setelah upload / CRUD sentimen).
+  function segarkanData() {
+    muatStatistik();
+    muatArtikel(page, filter);
+  }
+
+  // Setelah upload artikel baru: kembali ke halaman 1 agar artikel terlihat.
+  function selesaiUpload() {
+    setPage(1);
+    muatStatistik();
+    muatArtikel(1, filter);
+  }
+
   return (
     <>
       <header className="header">
@@ -117,6 +131,10 @@ export default function Dashboard() {
         </div>
 
         <div className="mb-24">
+          <UploadPanel onSelesai={selesaiUpload} />
+        </div>
+
+        <div className="mb-24">
           <ArticleTable
             data={artikel}
             total={total}
@@ -124,6 +142,7 @@ export default function Dashboard() {
             limit={LIMIT}
             loading={loadingTabel}
             onPageChange={gantiHalaman}
+            onDataChanged={segarkanData}
           />
         </div>
 

@@ -5,6 +5,7 @@ __pycache__/
 
 # DB SQLite lokal (dibuat otomatis saat runtime)
 mbg.db
+mbg_upload.db
 
 # Env
 .env

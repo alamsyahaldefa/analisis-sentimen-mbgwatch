@@ -37,6 +37,11 @@ mbgwatch-demo/
   kartu statistik, donut distribusi, tren bulanan, tabel artikel + paginasi.
 - **Cek kalimat**: analisis sentimen teks bebas.
 - **Cek URL**: tempel tautan berita → di-scrape → prediksi otomatis.
+- **Upload artikel** (pengganti scraping): unggah CSV/JSON berisi beberapa
+  artikel → tiap artikel diprediksi model → disimpan ke **DB upload terpisah**
+  (`mbg_upload.db`, tidak dicampur DB fase 1) → langsung tampil di portal publik.
+- **CRUD sentimen**: kolom "Aksi" di tabel artikel dashboard — admin dapat
+  mengganti label sentimen atau menghapus artikel.
 
 ---
 

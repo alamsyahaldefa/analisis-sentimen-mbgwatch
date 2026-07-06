@@ -19,11 +19,11 @@ export async function fetchArtikel(params = {}) {
   return res.json();
 }
 
-async function postJson(path, body, pesanDefault) {
+async function kirim(path, method, body, pesanDefault) {
   const res = await fetch(`${BASE}${path}`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(body),
+    method,
+    headers: body ? { "Content-Type": "application/json" } : undefined,
+    body: body ? JSON.stringify(body) : undefined,
   });
   if (!res.ok) {
     let pesan = pesanDefault;
@@ -38,6 +38,9 @@ async function postJson(path, body, pesanDefault) {
   return res.json();
 }
 
+const postJson = (path, body, pesanDefault) =>
+  kirim(path, "POST", body, pesanDefault);
+
 /** Prediksi sentimen teks baru. */
 export async function prediksiTeks(teks) {
   return postJson("/api/prediksi", { teks }, "Gagal melakukan prediksi.");
@@ -49,5 +52,37 @@ export async function prediksiUrl(url) {
     "/api/prediksi-url",
     { url },
     "Gagal menganalisis URL. Pastikan tautan benar dan dapat diakses."
+  );
+}
+
+/** Upload beberapa artikel sekaligus (pengganti scraping); backend
+ *  memprediksi sentimennya lalu menyimpan ke DB upload terpisah. */
+export async function uploadArtikel(items) {
+  return postJson(
+    "/api/artikel-upload",
+    { artikel: items },
+    "Gagal mengunggah artikel."
+  );
+}
+
+/** Admin mengganti label sentimen sebuah artikel. */
+export async function ubahSentimen(id, sentimen, sumber) {
+  const q = sumber ? `?sumber=${encodeURIComponent(sumber)}` : "";
+  return kirim(
+    `/api/artikel/${encodeURIComponent(id)}${q}`,
+    "PATCH",
+    { sentimen },
+    "Gagal mengubah sentimen artikel."
+  );
+}
+
+/** Admin menghapus sebuah artikel. */
+export async function hapusArtikel(id, sumber) {
+  const q = sumber ? `?sumber=${encodeURIComponent(sumber)}` : "";
+  return kirim(
+    `/api/artikel/${encodeURIComponent(id)}${q}`,
+    "DELETE",
+    null,
+    "Gagal menghapus artikel."
   );
 }

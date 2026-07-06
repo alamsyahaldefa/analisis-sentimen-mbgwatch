@@ -15,6 +15,7 @@ class Artikel(BaseModel):
     sentimen: Optional[str] = None
     confidence: Optional[float] = None
     kategori: Optional[str] = None
+    sumber: Optional[str] = None  # 'dataset' (fase 1) | 'upload' (unggahan admin)
 
 
 class ArtikelResponse(BaseModel):
@@ -51,6 +52,36 @@ class PrediksiResponse(BaseModel):
 
 class PrediksiUrlRequest(BaseModel):
     url: str = Field(..., min_length=8, description="URL artikel berita MBG")
+
+
+# ---------------------------------------------------------------------------
+# Upload beberapa artikel (demo pengganti scraping) — masuk DB upload terpisah
+# ---------------------------------------------------------------------------
+
+class ArtikelUploadItem(BaseModel):
+    judul: str = Field(..., min_length=1)
+    teks: str = Field(..., min_length=1, description="Isi/lead artikel")
+    portal: Optional[str] = None
+    tanggal_terbit: Optional[str] = Field(None, description="YYYY-MM-DD")
+    url: Optional[str] = None
+
+
+class UploadArtikelRequest(BaseModel):
+    artikel: List[ArtikelUploadItem] = Field(..., min_length=1)
+
+
+class UploadGagal(BaseModel):
+    judul: str
+    error: str
+
+
+class UploadArtikelResponse(BaseModel):
+    berhasil: List[Artikel]
+    gagal: List[UploadGagal] = []
+
+
+class UpdateSentimenRequest(BaseModel):
+    sentimen: str = Field(..., description="negatif | netral | positif")
 
 
 class PrediksiUrlResponse(BaseModel):

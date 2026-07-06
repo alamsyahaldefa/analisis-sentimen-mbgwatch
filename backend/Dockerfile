@@ -4,6 +4,7 @@ FROM python:3.11-slim
 # Lokasi cache & DB yang selalu writable di HF Spaces
 ENV HF_HOME=/tmp/hf \
     MBG_DB=/tmp/mbg.db \
+    MBG_DB_UPLOAD=/tmp/mbg_upload.db \
     PYTHONUNBUFFERED=1
 
 WORKDIR /app

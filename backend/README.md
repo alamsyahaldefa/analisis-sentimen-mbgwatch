@@ -18,10 +18,13 @@ sentimen (teks & URL) untuk frontend yang di-*deploy* di Vercel.
 
 | Metode | Endpoint | Fungsi |
 |--------|----------|--------|
-| GET | `/api/artikel` | Daftar artikel (filter + paginasi) |
+| GET | `/api/artikel` | Daftar artikel gabungan fase 1 + upload (filter + paginasi) |
 | GET | `/api/statistik` | Statistik: total, per kelas, tren bulanan, kategori |
 | POST | `/api/prediksi` | Prediksi sentimen dari teks |
 | POST | `/api/prediksi-url` | Scrape artikel dari URL lalu prediksi |
+| POST | `/api/artikel-upload` | Upload beberapa artikel (pengganti scraping), diprediksi model lalu disimpan ke DB upload terpisah |
+| PATCH | `/api/artikel/{id}` | Admin mengganti label sentimen artikel |
+| DELETE | `/api/artikel/{id}` | Admin menghapus artikel |
 
 Dokumentasi interaktif tersedia di `/docs`.
 
@@ -47,7 +50,8 @@ Saat `git push` ke Space, berkas `model.safetensors` otomatis lewat **git-lfs**.
 | `FRONTEND_ORIGIN` | `*` | Origin CORS; set ke domain Vercel untuk produksi |
 | `MBG_MODEL` | `./model_mbg_indobert` | Lokasi/nama model |
 | `MBG_CSV` | `./mbg_berlabel.csv` | Data seed dashboard |
-| `MBG_DB` | `/tmp/mbg.db` | Lokasi SQLite (writable) |
+| `MBG_DB` | `/tmp/mbg.db` | Lokasi SQLite fase 1 (writable) |
+| `MBG_DB_UPLOAD` | `./mbg_upload.db` | Lokasi SQLite artikel upload admin (terpisah dari fase 1) |
 
 ## Cara membuat Space
 

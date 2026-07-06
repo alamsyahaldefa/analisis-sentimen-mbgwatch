@@ -15,6 +15,9 @@ CSV_PATH = os.environ.get("MBG_CSV", os.path.join(BACKEND_DIR, "mbg_berlabel.csv
 MODEL_DIR = os.environ.get("MBG_MODEL", os.path.join(BACKEND_DIR, "model_mbg_indobert"))
 # DB SQLite ephemeral; di HF Spaces diarahkan ke /tmp lewat env MBG_DB (writable).
 DB_PATH = os.environ.get("MBG_DB", os.path.join(BACKEND_DIR, "mbg.db"))
+# DB terpisah untuk artikel hasil UPLOAD admin (demo pengganti scraping).
+# Sengaja tidak dicampur dengan DB fase 1 di atas.
+DB_UPLOAD_PATH = os.environ.get("MBG_DB_UPLOAD", os.path.join(BACKEND_DIR, "mbg_upload.db"))
 
 # Inferensi
 MAX_LENGTH = 128
