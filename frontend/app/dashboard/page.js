@@ -6,7 +6,7 @@ import { useCallback, useEffect, useState } from "react";
 import ArticleTable from "../../components/ArticleTable";
 import FilterBar from "../../components/FilterBar";
 import PredictPanel from "../../components/PredictPanel";
-import UploadPanel from "../../components/UploadPanel";
+// import UploadPanel from "../../components/UploadPanel"; // fitur upload sementara disembunyikan
 import UrlPredictPanel from "../../components/UrlPredictPanel";
 import SentimentDonut from "../../components/SentimentDonut";
 import StatCards from "../../components/StatCards";
@@ -78,17 +78,10 @@ export default function Dashboard() {
     muatArtikel(halaman, filter);
   }
 
-  // Segarkan statistik + tabel (dipakai setelah upload / CRUD sentimen).
+  // Segarkan statistik + tabel setelah admin mengubah/menghapus sentimen (CRUD).
   function segarkanData() {
     muatStatistik();
     muatArtikel(page, filter);
-  }
-
-  // Setelah upload artikel baru: kembali ke halaman 1 agar artikel terlihat.
-  function selesaiUpload() {
-    setPage(1);
-    muatStatistik();
-    muatArtikel(1, filter);
   }
 
   return (
@@ -130,9 +123,9 @@ export default function Dashboard() {
           <TrendLine tren={statistik?.tren_bulanan} />
         </div>
 
-        <div className="mb-24">
-          <UploadPanel onSelesai={selesaiUpload} />
-        </div>
+        {/* Fitur upload artikel sementara disembunyikan (aktifkan kembali
+            dengan meng-uncomment import UploadPanel, handler selesaiUpload,
+            dan blok <UploadPanel /> di sini). */}
 
         <div className="mb-24">
           <ArticleTable
