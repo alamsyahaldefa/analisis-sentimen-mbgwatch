@@ -39,9 +39,6 @@ export default function SentimentDonut({ perKelas }) {
                 innerRadius={70}
                 outerRadius={105}
                 paddingAngle={2}
-                label={({ name, percent }) =>
-                  `${name} ${(percent * 100).toFixed(0)}%`
-                }
               >
                 {data.map((d) => (
                   <Cell key={d.key} fill={WARNA[d.key]} />

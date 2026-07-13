@@ -145,7 +145,7 @@ export default function Dashboard() {
         </div>
 
         <footer className="muted" style={{ padding: "8px 0 40px" }}>
-          MBG Watch · Tugas Akhir Analisis Sentimen · FastAPI + Next.js + IndoBERT.
+          MBG Watch · Tugas Akhir Analisis Sentimen Berita MBG Fine Tuning IndoBERT.
         </footer>
       </main>
     </>

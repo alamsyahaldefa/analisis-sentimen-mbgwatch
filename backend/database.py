@@ -72,6 +72,16 @@ _GABUNGAN = (f"(SELECT {_KOLOM}, 'dataset' AS sumber FROM main.artikel "
 # Nama tabel fisik per nilai `sumber` (untuk operasi tulis/CRUD).
 _TABEL_SUMBER = {"dataset": "main.artikel", "upload": "up.artikel"}
 
+# Portal yang tautannya mengarah ke HALAMAN TAG portal (bukan artikel asli),
+# mis. Liputan6 ("...Kabar Terbaru Terkini | Liputan6.com"). Artikel dari
+# portal ini diberi "tanggal semu" = tanggal tengah daftar pada tampilan
+# default, sehingga terselip di tengah dan tidak muncul di halaman depan.
+# Bisa ditimpa/dimatikan lewat env MBG_PORTAL_SELIP (dipisah koma; kosongkan
+# untuk menonaktifkan penyelipan).
+_PORTAL_SELIP = [p.strip() for p in
+                 os.environ.get("MBG_PORTAL_SELIP", "Liputan6").split(",")
+                 if p.strip()]
+
 
 def get_conn():
     conn = sqlite3.connect(DB_PATH)
@@ -173,6 +183,40 @@ def _bangun_where(portal=None, sentimen=None, cari=None, start=None, end=None,
     return where, params
 
 
+def _tanggal_tengah(conn):
+    """Tanggal pada posisi tengah daftar seluruh artikel (urut terbaru →
+    terlama). Dipakai sebagai kunci semu penempatan artikel _PORTAL_SELIP.
+    Dihitung atas seluruh set (bukan hasil terfilter) agar konsisten."""
+    total = conn.execute(
+        f"SELECT COUNT(*) FROM {_GABUNGAN} "
+        "WHERE tanggal_terbit IS NOT NULL AND tanggal_terbit != ''"
+    ).fetchone()[0]
+    if total == 0:
+        return None
+    row = conn.execute(
+        f"SELECT tanggal_terbit FROM {_GABUNGAN} "
+        "WHERE tanggal_terbit IS NOT NULL AND tanggal_terbit != '' "
+        "ORDER BY tanggal_terbit DESC LIMIT 1 OFFSET ?",
+        (total // 2,),
+    ).fetchone()
+    return row[0] if row else None
+
+
+def _urutan_default(conn):
+    """Klausa ORDER BY tampilan default. Artikel dari _PORTAL_SELIP diberi
+    tanggal semu = tanggal tengah, sehingga terselip di tengah daftar (tidak
+    di halaman depan). Return (klausa_sql, params)."""
+    tgl_tengah = _tanggal_tengah(conn)
+    if not _PORTAL_SELIP or tgl_tengah is None:
+        return "ORDER BY tanggal_terbit DESC, id", []
+    ph = ",".join("?" * len(_PORTAL_SELIP))
+    klausa = (
+        f"ORDER BY CASE WHEN portal IN ({ph}) THEN ? "
+        "ELSE tanggal_terbit END DESC, tanggal_terbit DESC, id"
+    )
+    return klausa, list(_PORTAL_SELIP) + [tgl_tengah]
+
+
 def query_artikel(portal=None, sentimen=None, cari=None, start=None, end=None,
                   kategori=None, page=1, limit=10):
     where, params = _bangun_where(portal, sentimen, cari, start, end, kategori)
@@ -186,14 +230,15 @@ def query_artikel(portal=None, sentimen=None, cari=None, start=None, end=None,
     limit = max(1, int(limit))
     offset = (page - 1) * limit
 
+    order_sql, order_params = _urutan_default(conn)
     rows = conn.execute(
         f"""
         SELECT {_KOLOM}, sumber
         FROM {_GABUNGAN}{where}
-        ORDER BY tanggal_terbit DESC
+        {order_sql}
         LIMIT ? OFFSET ?
         """,
-        params + [limit, offset],
+        params + order_params + [limit, offset],
     ).fetchall()
     conn.close()
 

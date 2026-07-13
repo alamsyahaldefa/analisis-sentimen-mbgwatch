@@ -33,7 +33,7 @@ export default function PredictPanel() {
 
   return (
     <div className="card">
-      <h2 className="section-title">Coba Sendiri — Analisis Teks Baru</h2>
+      <h2 className="section-title">Analisis Teks Baru</h2>
       <p className="muted" style={{ marginTop: 0 }}>
         Tempel potongan teks/berita tentang MBG, lalu klik Analisis untuk melihat
         prediksi sentimennya.
