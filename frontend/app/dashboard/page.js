@@ -108,14 +108,6 @@ export default function Dashboard() {
           </div>
         )}
 
-        <FilterBar
-          portals={statistik?.portals || []}
-          draft={draft}
-          setDraft={setDraft}
-          onApply={terapkanFilter}
-          onReset={resetFilter}
-        />
-
         <StatCards statistik={statistik} />
 
         <div className="grid grid-2 mb-24">
@@ -123,9 +115,13 @@ export default function Dashboard() {
           <TrendLine tren={statistik?.tren_bulanan} />
         </div>
 
-        {/* Fitur upload artikel sementara disembunyikan (aktifkan kembali
-            dengan meng-uncomment import UploadPanel, handler selesaiUpload,
-            dan blok <UploadPanel /> di sini). */}
+        <FilterBar
+          portals={statistik?.portals || []}
+          draft={draft}
+          setDraft={setDraft}
+          onApply={terapkanFilter}
+          onReset={resetFilter}
+        />
 
         <div className="mb-24">
           <ArticleTable
